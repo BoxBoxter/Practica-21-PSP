@@ -11,7 +11,7 @@ public class Cliente {
         InterficieHorari horari = null;
         Scanner scan = new Scanner(System.in);
 
-        String ip, ciutat, hora;
+        String ip, ciutat;
 
         //inicializar connexió.
         while (true) {
@@ -47,34 +47,27 @@ public class Cliente {
             try {
                 System.out.println(horari.darHora(ciutat) + "\n");
             } catch (RemoteException e) {
-                System.out.println("Vols introduïr una nova ciutat a la BD? (si/no)");
+                System.out.println("Introduïr una nova ciutat a la BD? (si/no)");
                 String opcio = scan.nextLine();
 
-                if(opcio.equals("si")) {
-                    System.out.println("Por favor indique la fecha de hoy en el siguiente formato dd/mm/yyyy ");
+                if (opcio.equals("si")) {
+                    System.out.println("Introduïr data avui dd/mm/yyyy ");
 
-                    String fechaAñadir = scan.nextLine();
-                    System.out.println("Por favor indique ahora la hora con en formato 24h de esta forma hh:mm");
-                    String horaAñadir = scan.nextLine();
+                    String data = scan.nextLine();
+                    System.out.println("Introduïr hora amb format 24h hh:mm");
+                    String hora = scan.nextLine();
                     try {
-                        if (horari.nuevaCiudad(ciutat, fechaAñadir + " " + horaAñadir)) {
-                            System.out.println("Ciudad añadida con exito");
+                        if (horari.nuevaCiudad(ciutat, data + " " + hora)) {
+                            System.out.println("Ciutat afegida...");
                             System.out.println(horari.darHora(ciutat) + "\n");
                         } else {
-                            System.out.println("Ha ocurrido un error añadiendo la ciudad a la base de datos... Por favor intentelo de nuevo");
+                            System.out.println("ERROR: Falla introdcuccio base de dades");
                         }
                     } catch (RemoteException ex) {
                         ex.printStackTrace();
                     }
                 }
             }
-
-            /*
-
-             * En cas que el client es despedeixi
-
-             */
-
             if (ciutat.toLowerCase().equals("adeu"))
 
                 break;
